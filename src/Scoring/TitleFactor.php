@@ -4,7 +4,7 @@ namespace App\Scoring;
 
 use App\Entity\BigFootSighting;
 
-class TitleFactor implements ScoringFactorInterface
+class TitleFactor implements ScoringFactorInterface, AdjustFinalScoreInterface
 {
     public function score(BigFootSighting $sighting): int
     {
@@ -19,6 +19,15 @@ class TitleFactor implements ScoringFactorInterface
             $score += 20;
         }
 
+        return $score;
+    }
+
+    public function adjustScore(int $score, BigFootSighting $sighting): int
+    {
+        if (stripos($sighting->getTitle(), 'foot') !== false) {
+            $score *= 5;
+        }
+        dump($score);
         return $score;
     }
 }
